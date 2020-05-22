@@ -84,7 +84,13 @@ pipeline {
 
     stage ('Verify Deployment to Dev') {
       steps {
-        verifyDeployment(projectName: env.DEV, targetApp: env.APP_NAME)
+        // verifyDeployment(projectName: env.DEV, targetApp: env.APP_NAME)
+        openshift.withProject( env.DEV ) {
+            echo "Verify Deployment in: ${openshift.project()}"
+            def dc = openshift.selector('dc', "${APP_NAME}")
+            dc.rollout().latest(false)
+            dc.rollout().status()
+        }
       }
     }
 
@@ -96,6 +102,7 @@ pipeline {
 
     stage ('Verify Deployment to Stage') {
       steps {
+
         verifyDeployment(projectName: env.STAGE, targetApp: env.APP_NAME)
       }
     }
