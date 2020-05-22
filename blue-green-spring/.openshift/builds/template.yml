@@ -78,7 +78,7 @@ parameters:
 - description: Git source URI for application
   name: SOURCE_REPOSITORY_URL
   required: true
-  value: https://github.com/redhat-cop/container-pipelines.git
+  value: https://github.com/welshstew/container-pipelines.git
 - description: Git branch/tag reference
   name: SOURCE_REPOSITORY_REF
   value: "master"
@@ -91,7 +91,7 @@ parameters:
 - description: Source code repo for demo app
   name: APPLICATION_SOURCE_REPO
   required: true
-  value: https://github.com/redhat-cop/spring-rest.git
+  value: https://github.com/welshstew/spring-rest.git
 - description: Source code ref for demo app
   name: APPLICATION_SOURCE_REF
   required: true
