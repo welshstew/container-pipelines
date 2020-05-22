@@ -89,9 +89,13 @@ pipeline {
           openshift.withCluster() {
             openshift.withProject( env.DEV ) {
               echo "Verify Deployment in: ${openshift.project()}"
-              def dc = openshift.selector('dc', "${APP_NAME}")
-              dc.rollout().latest(false)
-              oc.rollout().status()
+              echo "Selector deploymentConfig ${APP_NAME}"
+              def dc = openshift.selector("deploymentConfig", "${APP_NAME}").rollout()
+              timeout(5) { 
+                openshift.selector("deploymentConfig", "${APP_NAME}").related('pods').untilEach(1) {
+                  return (it.object().status.phase == "Running")
+                }
+              }
             }
           }
         }
