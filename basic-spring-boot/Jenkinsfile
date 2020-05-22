@@ -85,7 +85,7 @@ pipeline {
     stage ('Verify Deployment to Dev') {
       steps {
         // verifyDeployment(projectName: env.DEV, targetApp: env.APP_NAME)
-        script{
+        script {
           openshift.withCluster() {
             openshift.withProject( env.DEV ) {
               echo "Verify Deployment in: ${openshift.project()}"
@@ -111,7 +111,21 @@ pipeline {
     stage ('Verify Deployment to Stage') {
       steps {
 
-        verifyDeployment(projectName: env.STAGE, targetApp: env.APP_NAME)
+        //verifyDeployment(projectName: env.STAGE, targetApp: env.APP_NAME)
+        script {
+          openshift.withCluster() {
+            openshift.withProject( env.STAGE ) {
+              echo "Verify Deployment in: ${openshift.project()}"
+              echo "Selector dc ${APP_NAME}"
+              def dc = openshift.selector("dc", "${APP_NAME}").rollout()
+              timeout(5) { 
+                openshift.selector("dc", "${APP_NAME}").related('pods').untilEach(1) {
+                  return (it.object().status.phase == "Running")
+                }
+              }
+            }
+          }
+        }
       }
     }
 
@@ -131,7 +145,21 @@ pipeline {
 
     stage ('Verify Deployment to Prod') {
       steps {
-        verifyDeployment(projectName: env.PROD, targetApp: env.APP_NAME)
+        // verifyDeployment(projectName: env.PROD, targetApp: env.APP_NAME)
+        script {
+          openshift.withCluster() {
+            openshift.withProject( env.PROD ) {
+              echo "Verify Deployment in: ${openshift.project()}"
+              echo "Selector dc ${APP_NAME}"
+              def dc = openshift.selector("dc", "${APP_NAME}").rollout()
+              timeout(5) { 
+                openshift.selector("dc", "${APP_NAME}").related('pods').untilEach(1) {
+                  return (it.object().status.phase == "Running")
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
