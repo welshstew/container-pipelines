@@ -33,16 +33,26 @@ pipeline {
       }
     }
 
+    
+
     stage('pom information') {
       steps {
         script {
           pom_file = env.BUILD_CONTEXT_DIR ? "${env.BUILD_CONTEXT_DIR}/pom.xml" : "pom.xml"
-          version = getVersionFromPom(pom_file)
+          version = "1.0.${BUILD_ID}"    //getVersionFromPom(pom_file)
           def artifactId = getArtifactIdFromPom(pom_file)
           def groupId = getGroupIdFromPom(pom_file)
           println("Artifact ID: ${artifactId}, Group ID: ${groupId}")
           println("New version tag: ${version}")
         }
+      }
+    }
+
+    stage('Create new version based on Jenkins BUILD_ID'){
+      steps {
+        sh '''
+        mvn -B versions:set -DnewVersion=1.0.${BUILD_ID} -DskipTests=true -f ${pom_file}
+        '''
       }
     }
     
