@@ -208,7 +208,7 @@ pipeline {
               echo "Verify Deployment in: ${PROD}"
               def dc = openshift.selector("dc", "${APP_NAME}-${newState}").rollout()
               timeout(5) { 
-                openshift.selector("dc", "${APP_NAME}").related('pods').untilEach(1) {
+                openshift.selector("dc", "${APP_NAME}-${newState}").related('pods').untilEach(1) {
                   return (it.object().status.phase == "Running")
                 }
               }
