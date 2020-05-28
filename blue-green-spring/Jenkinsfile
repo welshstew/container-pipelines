@@ -50,9 +50,7 @@ pipeline {
 
     stage('Create new version based on Jenkins BUILD_ID'){
       steps {
-        sh '''
-        mvn -B versions:set -DnewVersion=1.0.${BUILD_ID} -DskipTests=true -f ${pom_file}
-        '''
+        sh "mvn -B versions:set -DnewVersion=1.0.${BUILD_ID} -DskipTests=true -f ${pom_file}"
       }
     }
     
