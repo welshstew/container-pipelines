@@ -77,9 +77,27 @@ pipeline {
       }
     }
 
-    stage('Verify Deployment to Dev') {
+    // stage('Verify Deployment to Dev') {
+    //   steps {
+    //     verifyDeployment(projectName: DEV, targetApp: APP_NAME)
+    //   }
+    // }
+
+    stage ('Verify Deployment to Dev') {
       steps {
-        verifyDeployment(projectName: DEV, targetApp: APP_NAME)
+        script {
+          openshift.withCluster() {
+            openshift.withProject( DEV ) {
+              echo "Verify Deployment in: ${DEV}"
+              def dc = openshift.selector("dc", "${APP_NAME}").rollout()
+              timeout(5) { 
+                openshift.selector("dc", "${APP_NAME}").related('pods').untilEach(1) {
+                  return (it.object().status.phase == "Running")
+                }
+              }
+            }
+          }
+        }
       }
     }
 
