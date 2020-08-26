@@ -5,8 +5,8 @@ sb_stage_namespace: petclinic-spring-boot-stage
 sb_prod_namespace: petclinic-spring-boot-prod
 sb_application_repository_url: "https://github.com/Purple-Sky-Pirates/spring-petclinic.git"
 sb_application_repository_ref: basic-build
-sb_application_readiness_response: "status.:.UP"
-sb_application_readiness_path: "/health"
+sb_application_readiness_response: "html"
+sb_application_readiness_path: "/"
 sb_sa_name: "jenkins"
 sb_source_repository_url: "https://github.com/welshstew/container-pipelines.git"
 sb_source_repository_ref: master
