@@ -6,9 +6,7 @@ retriever: modernSCM(
   ]
 )
 
-tools {
-  jdk 'java-1.8.0-openjdk'
-}
+
 
 openshift.withCluster() {
   env.NAMESPACE = openshift.project()
@@ -27,10 +25,14 @@ pipeline {
   // All the stages and steps of this Pipeline will be executed on this Pod
   // After Pipeline completes the Pod is killed so every run will have clean
   // workspace
+
+  tools {
+    jdk 'java-1.8.0-openjdk'
+  }
+
   agent {
     label 'maven'
   }
-
   // Pipeline Stages start here
   // Requeres at least one stage
   stages {
