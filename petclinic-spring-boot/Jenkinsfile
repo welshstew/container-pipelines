@@ -6,6 +6,10 @@ retriever: modernSCM(
   ]
 )
 
+tools {
+  jdk 'java-1.8.0-openjdk'
+}
+
 openshift.withCluster() {
   env.NAMESPACE = openshift.project()
   env.POM_FILE = env.BUILD_CONTEXT_DIR ? "${env.BUILD_CONTEXT_DIR}/pom.xml" : "pom.xml"
@@ -45,7 +49,11 @@ pipeline {
     // Run Maven build, skipping tests
     stage('Build'){
       steps {
-        sh "mvn -B clean install -DskipTests=true -f ${POM_FILE}"
+        withEnv(["JAVA_HOME=${tool 'java-1.8.0-openjdk'}", "PATH=${tool 'java-1.8.0-openjdk'}/bin:${env.PATH}"]) {
+          sh "java -version"
+          sh "mvn -version"
+          sh "${mvnCmd} -B clean install -DskipTests=true -f ${POM_FILE}"
+        }
       }
     }
 
