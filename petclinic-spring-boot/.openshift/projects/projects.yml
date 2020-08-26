@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: project.openshift.io/v1
+  kind: ProjectRequest
+  metadata:
+    name: petclinic-spring-boot-build
+    creationTimestam: null
+  displayName: Spring PetClinic App - Build
+- apiVersion: project.openshift.io/v1
+  kind: ProjectRequest
+  metadata:
+    name: petclinic-spring-boot-dev
+    creationTimestam: null
+  displayName: Spring Rest App - Dev
+- apiVersion: project.openshift.io/v1
+  kind: ProjectRequest
+  metadata:
+    name: petclinic-spring-boot-stage
+    creationTimestam: null
+  displayName: Spring PetClinic App - Stage
+- apiVersion: project.openshift.io/v1
+  kind: ProjectRequest
+  metadata:
+    name: petclinic-spring-boot-prod
+    labels:
+      environment: production
+    creationTimestam: null
+  displayName: Spring PetClinic App - Prod
