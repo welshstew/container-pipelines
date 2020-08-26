@@ -50,7 +50,7 @@ pipeline {
         withEnv(["JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk", "PATH=/usr/lib/jvm/java-1.8.0-openjdk/bin:${env.PATH}"]) {
           sh "java -version"
           sh "mvn -version"
-          sh "${mvnCmd} -B clean install -DskipTests=true -f ${POM_FILE}"
+          sh "mvn -B clean install -DskipTests=true -f ${POM_FILE}"
         }
       }
     }
@@ -58,7 +58,9 @@ pipeline {
     // Run Maven unit tests
     stage('Unit Test'){
       steps {
-        sh "mvn -B test -f ${POM_FILE}"
+        withEnv(["JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk", "PATH=/usr/lib/jvm/java-1.8.0-openjdk/bin:${env.PATH}"]) {
+          sh "mvn -B test -f ${POM_FILE}"
+        }
       }
     }
 
@@ -75,7 +77,7 @@ pipeline {
         """
 
         // Build container image using local Openshift cluster
-        // Giving all the artifacts to OpenShift Binary Build
+        // Giving all the artifacts to OpenShift Binary Buildß
         // This places your artifacts into right location inside your S2I image
         // if the S2I image supports it.
         binaryBuild(projectName: env.BUILD, buildConfigName: env.APP_NAME, buildFromPath: "oc-build")
