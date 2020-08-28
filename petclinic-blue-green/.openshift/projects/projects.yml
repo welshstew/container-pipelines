@@ -4,24 +4,24 @@ items:
 - apiVersion: project.openshift.io/v1
   kind: ProjectRequest
   metadata:
-    name: petclinic-bg-dev
+    name: petclinic-dev
     creationTimestam: null
   displayName: Spring Boot Blue Green - Dev
 - apiVersion: project.openshift.io/v1
   kind: ProjectRequest
   metadata:
-    name: petclinic-bg-stage
+    name: petclinic-stage
     creationTimestam: null
   displayName: Spring Boot Blue Green - Staging
 - apiVersion: project.openshift.io/v1
   kind: ProjectRequest
   metadata:
-    name: petclinic-bg-prod
+    name: petclinic-prod
     creationTimestam: null
   displayName: Spring Boot Blue Green - Prod
 - apiVersion: project.openshift.io/v1
   kind: ProjectRequest
   metadata:
-    name: petclinic-bg-build
+    name: petclinic-build
     creationTimestam: null
   displayName: Spring Boot Blue Green - Build

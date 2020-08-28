@@ -1,3 +1,3 @@
 APPLICATION_NAME=petclinic
-NAMESPACE=petclinic-bg-build
+NAMESPACE=petclinic-build
 IMAGE_STREAM_TAG_NAME=redhat-openjdk18-openshift:1.5

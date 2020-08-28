@@ -8,16 +8,16 @@ openshift_cluster_content:
 - object: deployments
   content:
   - name: jenkins
-    namespace: petclinic-bg-build
+    namespace: petclinic-build
     template: openshift//jenkins-ephemeral
     params: "{{ inventory_dir }}/../.openshift/deployment/build/params"
-  - name: petclinic-bg-dev
+  - name: petclinic-dev
     template: "{{ inventory_dir }}/../.openshift/deployment/template.yml"
     params: "{{ inventory_dir }}/../.openshift/deployment/dev/params"
-  - name: petclinic-bg-stage
+  - name: petclinic-stage
     template: "{{ inventory_dir }}/../.openshift/deployment/template.yml"
     params: "{{ inventory_dir }}/../.openshift/deployment/stage/params"
-  - name: petclinic-bg-prod
+  - name: petclinic-prod
     template: "{{ inventory_dir }}/../.openshift/deployment/template-bg.yml"
     params: "{{ inventory_dir }}/../.openshift/deployment/prod/params"
 - object: builds

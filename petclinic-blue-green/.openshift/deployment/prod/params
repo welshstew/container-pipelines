@@ -1,2 +1,2 @@
 APPLICATION_NAME=petclinic
-NAMESPACE=petclinic-bg-prod
+NAMESPACE=petclinic-prod
